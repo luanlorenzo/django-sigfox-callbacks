@@ -1,1 +1,1 @@
-web: gunicorn ./src/sigfox.wsgi
+web: gunicorn sigfox.wsgi
