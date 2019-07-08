@@ -1,0 +1,7 @@
+{
+  "name": "SigFox Callbacks Django",
+  "description": "An example of SigFox Callbacks using Django",
+  "repository": "https://github.com/luanlorenzo/sigfox-django-callbacks",
+  "logo": "https://www.sigfox.com/themes/sigfox/logo.svg",
+  "keywords": ["sigfox", "django", "python", "callbacks"]
+}
