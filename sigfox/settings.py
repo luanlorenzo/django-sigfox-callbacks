@@ -19,13 +19,13 @@ ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'sigfoxcallbacks.apps.SigfoxcallbacksConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sigfoxcallbacks.apps.SigfoxcallbacksConfig',
     'rest_framework'
 ]
 

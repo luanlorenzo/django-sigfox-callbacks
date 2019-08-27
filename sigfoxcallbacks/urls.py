@@ -1,8 +1,10 @@
 from django.urls import path
-
-from . import views
+from rest_framework.urlpatterns import format_suffix_patterns
+from sigfoxcallbacks import views
 
 urlpatterns = [
-  path('', views.callbacks_view, name='index'),
-  path('sigfox/', views.sigfox_callback, name='sigfoxcallback')
+  path('', views.api_root, name='index'),
+  path('callback/', views.CallbackList.as_view(), name='callback-list')
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

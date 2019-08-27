@@ -1,18 +1,17 @@
-from django.shortcuts import render
-from rest_framework import status
+from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
-callback_request = []
+from .models import Callback
+from .serializers import CallbackSerializer
 
-@api_view(['POST'])
-def sigfox_callback(request):
-  if request.method == 'POST':
-    callback_request.append(request.data)
-  return Response(status=200)
+@api_view(['GET'])
+def api_root(request, format=None):
+  return Response({
+    'callback': reverse('callback-list', request=request, format=format)
+  })
 
-def callbacks_view(request, *args, **kwargs): 
-  context = {
-    'callbacks': callback_request
-  }
-  return render(request, "index.html", context)
+class CallbackList(generics.ListCreateAPIView):
+  queryset = Callback.objects.all()
+  serializer_class = CallbackSerializer
