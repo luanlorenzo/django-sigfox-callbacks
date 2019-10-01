@@ -5,12 +5,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mc3p$9ordup&d)$b2ryp6(0x!x0i1v$x^a&-4)t%754^5zfvxa'
+SECRET_KEY = '_2=1sudl2^%px8f&++lkw5qj6qrq&+)wvv!@vo74=6ie-_p3*8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+
 
 # Application definition
 
@@ -25,11 +26,12 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = ['rest_framework']
 
-PROJECT_APPS = ['sigfoxcallbacks']
+PROJECT_APPS = ['callbacks']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -39,12 +41,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sigfox.urls'
+ROOT_URLCONF = 'sigfoxproject.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -57,7 +59,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sigfox.wsgi.application'
+WSGI_APPLICATION = 'sigfoxproject.wsgi.application'
 
 
 # Database
@@ -89,6 +91,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -101,16 +104,13 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
+
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = []
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-# Django Rest Framework settings
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-    )
-}
+# Activate Django-Heroku
 
-# Activate Django-Heroku.
 django_heroku.settings(locals())

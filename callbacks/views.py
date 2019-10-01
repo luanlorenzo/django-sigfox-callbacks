@@ -15,3 +15,6 @@ def api_root(request, format=None):
 class CallbackList(generics.ListCreateAPIView):
   queryset = Callback.objects.all()
   serializer_class = CallbackSerializer
+
+class CallbackDeviceList(generics.RetrieveAPIView):
+  queryset = Callback.objects

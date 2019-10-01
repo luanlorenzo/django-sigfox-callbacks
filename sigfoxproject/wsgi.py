@@ -1,5 +1,5 @@
 """
-WSGI config for sigfox project.
+WSGI config for sigfoxproject project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sigfox.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sigfoxproject.settings')
 
 application = get_wsgi_application()
