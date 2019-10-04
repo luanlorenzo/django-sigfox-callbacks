@@ -1,7 +1,7 @@
 {
   "name": "SigFox Callbacks Django",
   "description": "An example of SigFox Callbacks using Django",
-  "repository": "https://github.com/luanlorenzo/sigfox-django-callbacks",
-  "logo": "https://www.sigfox.com/themes/sigfox/logo.svg",
+  "repository": "https://github.com/luanlorenzo/django-sigfox-callbacks",
+  "logo": "https://build.sigfox.com/assets/logo-build-fb.jpg",
   "keywords": ["sigfox", "django", "python", "callbacks"]
 }
