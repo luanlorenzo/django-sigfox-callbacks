@@ -1,19 +1,21 @@
-import django_heroku
 import os
+from os.path import dirname, join, exists, abspath
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+import environ
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'mc3p$9ordup&d)$b2ryp6(0x!x0i1v$x^a&-4)t%754^5zfvxa'
+env = environ.Env()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+env_file = join(dirname(__file__), ".env")
+if exists(env_file):
+    environ.Env.read_env(str(env_file))
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+BASE_DIR = dirname(dirname(abspath(__file__)))
+SECRET_KEY = env("DJANGO_SECRET_KEY")
+DEBUG = env.bool("DJANGO_DEBUG", False)
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", [])
+
 
 # Application definition
-
 DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -30,6 +32,7 @@ PROJECT_APPS = ['callbacks']
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -37,15 +40,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-ROOT_URLCONF = 'sigfox.urls'
+ROOT_URLCONF = 'sigfoxproject.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -58,21 +60,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sigfox.wsgi.application'
-
+WSGI_APPLICATION = 'sigfoxproject.wsgi.application'
 
 # Database
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
     }
 }
 
 
 # Password validation
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -103,8 +105,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = []
+STATIC_ROOT = join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    join(BASE_DIR, 'static'),
+)
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# Rest framework
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
