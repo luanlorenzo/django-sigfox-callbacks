@@ -103,6 +103,7 @@ STATIC_ROOT = join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     join(BASE_DIR, 'static'),
 )
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Rest framework
 REST_FRAMEWORK = {
