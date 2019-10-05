@@ -10,6 +10,4 @@ run:
 release:
   image: web
   command:
-    - python ./src/manage.py collectstatic --noinput
-    - python ./src/manage.py makemigrations --noinput
-    - python ./src/manage.py makemigrations --noinput
+    - python manage.py collectstatic --noinput
