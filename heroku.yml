@@ -1,15 +1,9 @@
-setup:
-  addons:
-    - plan: heroku-postgresql
-      as: DATABASE
 build:
   docker:
     web: Dockerfile
 run:
-  web: gunicorn --chdir ./src edsplatform.wsgi:application --bind 0.0.0.0:$PORT
+  web: gunicorn --chdir ./src sigfoxproject.wsgi:application --bind 0.0.0.0:$PORT
 release:
   image: web
   command:
     - python ./src/manage.py collectstatic --noinput
-    - python ./src/manage.py makemigrations --noinput
-    - python ./src/manage.py makemigrations --noinput
